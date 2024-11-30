@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin_user
+      RABBITMQ_DEFAULT_PASS: admin_pass
+
+  db:
+    image: postgres:14
+    environment:
+      - POSTGRES_USER=admin_user
+      - POSTGRES_PASSWORD=admin_password
+      - POSTGRES_DB=app_db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  db_data: 
