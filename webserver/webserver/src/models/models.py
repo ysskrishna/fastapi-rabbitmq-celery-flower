@@ -25,3 +25,11 @@ class Email(Timestamp, Base):
     email = Column(String, index=True)
     subject = Column(String)
     message = Column(Text)
+
+class Outbox(Timestamp, Base):
+    __tablename__ = "outbox"
+
+    id = Column(Integer, primary_key=True, index=True)
+    event_type = Column(String, nullable=False)
+    payload = Column(Text, nullable=False)
+    sent_at = Column(DateTime, nullable=True)
