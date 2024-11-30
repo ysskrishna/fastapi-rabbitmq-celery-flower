@@ -7,6 +7,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - DB_HOST=db
+      - RABBITMQ_HOST=rabbitmq
     ports:
       - "8000:8000"
     depends_on:
