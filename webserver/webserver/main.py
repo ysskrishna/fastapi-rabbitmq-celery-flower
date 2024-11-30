@@ -1,4 +1,9 @@
 from fastapi import FastAPI
+from src.core.dbutils import engine
+from src.models import models
+
+# create all tables
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
