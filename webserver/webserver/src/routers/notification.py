@@ -8,7 +8,7 @@ import json
 from datetime import datetime
 from src.core.rabbitmq import rabbitmq_publisher
 from src.core.funcs import generate_idempotency_key
-from src.models.enums import RabbitMQQueue
+from src.models.enums import RabbitMQ
 
 router = APIRouter(
     prefix="/notification",
@@ -35,7 +35,7 @@ def trigger_sms(info: schemas.CreateSMS, db: Session = Depends(get_db)):
 
     outbox_event = Outbox(
         event_type=OutboxEventType.TRIGGER_SMS.value,
-        queue_name=RabbitMQQueue.SMS_QUEUE.value,
+        queue_name=RabbitMQ.SMS_QUEUE.value,
         idempotency_key=idempotency_key,
         payload=json.dumps(payload),
     )
@@ -43,7 +43,7 @@ def trigger_sms(info: schemas.CreateSMS, db: Session = Depends(get_db)):
     db.commit()
     
     # Now send to RabbitMQ after successful commit
-    rabbitmq_publisher.publish_message(queue_name=RabbitMQQueue.SMS_QUEUE.value, message=json.dumps(payload))
+    rabbitmq_publisher.publish_message(queue_name=RabbitMQ.SMS_QUEUE.value, message=json.dumps(payload))
     
     outbox_event.sent_at = datetime.utcnow()
     db.commit()
@@ -71,7 +71,7 @@ def trigger_email(info: schemas.CreateEmail, db: Session = Depends(get_db)):
     
     outbox_event = Outbox(
         event_type=OutboxEventType.TRIGGER_EMAIL.value,
-        queue_name=RabbitMQQueue.EMAIL_QUEUE.value,
+        queue_name=RabbitMQ.EMAIL_QUEUE.value,
         idempotency_key=idempotency_key,
         payload=json.dumps(payload),
     )
@@ -79,7 +79,7 @@ def trigger_email(info: schemas.CreateEmail, db: Session = Depends(get_db)):
     db.commit()
     
     # Now send to RabbitMQ after successful commit
-    rabbitmq_publisher.publish_message(queue_name=RabbitMQQueue.EMAIL_QUEUE.value, message=json.dumps(payload))
+    rabbitmq_publisher.publish_message(queue_name=RabbitMQ.EMAIL_QUEUE.value, message=json.dumps(payload))
     
     outbox_event.sent_at = datetime.utcnow()
     db.commit()

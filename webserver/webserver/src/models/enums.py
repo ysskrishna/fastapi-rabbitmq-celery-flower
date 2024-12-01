@@ -6,7 +6,7 @@ class OutboxEventType(Enum):
     TRIGGER_EMAIL = "trigger_email"
 
 
-class RabbitMQQueue(Enum):
+class RabbitMQ(Enum):
     SMS_QUEUE = "sms_queue"
     EMAIL_QUEUE = "email_queue"
 
