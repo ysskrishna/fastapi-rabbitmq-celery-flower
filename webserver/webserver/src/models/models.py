@@ -32,4 +32,6 @@ class Outbox(Timestamp, Base):
     id = Column(Integer, primary_key=True, index=True)
     event_type = Column(String, nullable=False)
     payload = Column(Text, nullable=False)
+    queue_name = Column(String, nullable=False)
+    idempotency_key = Column(String, nullable=False)
     sent_at = Column(DateTime, nullable=True)
