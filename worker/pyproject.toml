@@ -1,0 +1,21 @@
+[project]
+name = "worker"
+version = "1.0.0"
+description = "Celery worker to process RabbitMQ messages"
+authors = [
+    {name = "Siva Sai",email = "sivasaikrishnassk@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "python-dotenv (>=1.1.0,<2.0.0)",
+    "celery (>=5.5.1,<6.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "worker"}]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
