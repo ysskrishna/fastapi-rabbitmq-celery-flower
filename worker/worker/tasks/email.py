@@ -5,7 +5,7 @@ from celery_app import app
 logger = logging.getLogger(__name__)
 
 
-@app.task(name='process_email', bind=True, max_retries=3)
+@app.task(name='email.process_email', bind=True, max_retries=3)
 def process_email(self, body):
     try:
         # Parse message if it's a string

@@ -30,4 +30,4 @@ COPY . .
 ENV PYTHONPATH=/app/worker
 
 # Command to run Celery worker
-CMD ["poetry", "run", "celery", "-A", "celery_app", "worker", "--loglevel=info"]
+CMD ["poetry", "run", "celery", "-A", "celery_app", "worker", "--loglevel=info", "-E", "-Q", "email_queue,sms_queue"]
