@@ -1,6 +1,7 @@
 import json
 import logging
 from celery_app import app
+import time
 
 logger = logging.getLogger(__name__)
 
@@ -24,6 +25,7 @@ def process_email(self, body):
         
         # TODO: Implement actual email sending logic here
         # For example, integrate with SMTP server or email service provider
+        time.sleep(20)
         
         logger.info(f"Successfully processed email to {email} (idempotency_key: {idempotency_key})")
         return True

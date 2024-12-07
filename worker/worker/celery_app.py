@@ -12,7 +12,7 @@ app = Celery(
 )
 
 app.conf.update(
-    result_backend=None,
+    result_backend=Config.CELERY_RESULT_BACKEND_URL,
     task_serializer='json',
     accept_content=['json'],
     enable_utc=True,

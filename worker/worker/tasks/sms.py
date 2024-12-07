@@ -1,6 +1,7 @@
 import json
 import logging
 from celery_app import app
+import time
 
 logger = logging.getLogger(__name__)
 
@@ -24,6 +25,7 @@ def process_sms(self, body):
         
         # TODO: Implement actual SMS sending logic here
         # For example, integrate with Twilio or another SMS provider
+        time.sleep(10)
         
         logger.info(f"Successfully processed SMS {sms_id} (idempotency_key: {idempotency_key})")
         return True
