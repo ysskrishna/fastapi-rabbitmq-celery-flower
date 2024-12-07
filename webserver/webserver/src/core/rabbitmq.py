@@ -43,13 +43,12 @@ class RabbitMQPublisher:
     
     def send_celery_task(self, queue_name, task_name, data):
         idempotency_key = generate_idempotency_key()
-        body = json.dumps({
+        payload = json.dumps({
             'args': [data], 
             'kwargs': {}, 
             'id': idempotency_key, 
             'task': task_name  
         })
-        payload = json.dumps(body)
         self.publish_message(queue_name, payload)
     
     
