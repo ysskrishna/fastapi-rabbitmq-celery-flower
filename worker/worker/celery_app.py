@@ -13,7 +13,10 @@ app = Celery(
 
 app.conf.update(
     result_backend=Config.CELERY_RESULT_BACKEND_URL,
+    task_track_started=True,
+    result_extended=True,
     task_serializer='json',
+    result_serializer='json',
     accept_content=['json'],
     enable_utc=True,
     worker_concurrency=2,  # Adjust based on your needs
