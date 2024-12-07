@@ -1,0 +1,54 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+
+# Poetry cache
+.cache/
+.poetry/
+
+# Virtual environments
+.env/
+.venv/
+venv/
+
+# Git
+.git/
+.gitignore
+
+# Docker
+.dockerignore
+Dockerfile
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Tests & dev tools
+tests/
+coverage.*
+.tox/
+.pytest_cache/
+.mypy_cache/
+*.cover
+*.log
+
+# IDEs/editors
+.vscode/
+.idea/
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+# Build artifacts
+build/
+dist/
+
+# Environment files
+.envrc
+*.env
+*.env.*
