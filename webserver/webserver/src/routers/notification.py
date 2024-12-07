@@ -7,6 +7,9 @@ import json
 from src.core.rabbitmq import rabbitmq_publisher
 from src.core.funcs import generate_idempotency_key
 from src.models.enums import RabbitMQ
+import logging
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(
     prefix="/notification",
@@ -20,13 +23,12 @@ def trigger_sms(info: schemas.CreateSMS, db: Session = Depends(get_db)):
     db_sms = SMS(phone=info.phone, message=info.message)
     db.add(db_sms)
     db.commit()
+    logger.info(f"SMS to {db_sms.phone} queued with id {db_sms.id}")
     
-    idempotency_key = generate_idempotency_key()
     payload = {
         "sms_id": db_sms.id, 
         "phone": db_sms.phone, 
-        "message": db_sms.message,
-        "idempotency_key": idempotency_key
+        "message": db_sms.message
     }
     
     # Now send to RabbitMQ after successful commit
@@ -41,14 +43,12 @@ def trigger_email(info: schemas.CreateEmail, db: Session = Depends(get_db)):
     db_email = Email(email=info.email, subject=info.subject, message=info.message)
     db.add(db_email)
     db.commit()
-    
-    idempotency_key = generate_idempotency_key()
+
     payload = {
         "email_id": db_email.id,
         "email": db_email.email,
         "subject": db_email.subject,
-        "message": db_email.message,
-        "idempotency_key": idempotency_key
+        "message": db_email.message
     }
     
     # Now send to RabbitMQ after successful commit
