@@ -8,7 +8,7 @@ from kombu import Queue
 app = Celery(
     'worker',
     broker=Config.CELERY_BROKER_URL,
-    include=['worker.tasks.email', 'worker.tasks.sms']
+    include=['worker.tasks']
 )
 
 app.conf.update(
