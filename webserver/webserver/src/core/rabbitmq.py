@@ -1,6 +1,7 @@
 import pika
 import json
 from src.core.config import Config
+from src.core.funcs import generate_idempotency_key
 
 class RabbitMQPublisher:
     def __init__(self):
@@ -40,16 +41,27 @@ class RabbitMQPublisher:
         except Exception as e:
             return False
     
-    def publish_message(self, queue_name, message, properties=None):
+    def send_celery_task(self, queue_name, task_name, data):
+        idempotency_key = generate_idempotency_key()
+        body = json.dumps({
+            'args': [data], 
+            'kwargs': {}, 
+            'id': idempotency_key, 
+            'task': task_name  
+        })
+        payload = json.dumps(body)
+        self.publish_message(queue_name, payload)
+    
+    
+    def publish_message(self, queue_name, message):
         try:
             if not self.connect():
                 return False
-                
-            if properties is None:
-                properties = pika.BasicProperties(
-                    delivery_mode=2,  # Make message persistent
-                    content_type='application/json'
-                )
+
+            properties = pika.BasicProperties(
+                delivery_mode=2,  # Make message persistent
+                content_type='application/json'
+            )
             
             # Ensure queue exists
             self.declare_queue(queue_name)
