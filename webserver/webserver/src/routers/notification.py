@@ -29,7 +29,7 @@ def trigger_sms(info: schemas.CreateSMS, db: Session = Depends(get_db)):
         task_name=CeleryTaskName.PROCESS_SMS.value,
         queue_name=RabbitMQ.SMS_QUEUE.value,
         data={
-            "sms_id": db_sms.id, 
+            "id": db_sms.id, 
             "from_": db_sms.from_,
             "to_": db_sms.to_, 
             "message": db_sms.message
@@ -51,7 +51,7 @@ def trigger_email(info: schemas.CreateEmail, db: Session = Depends(get_db)):
         task_name=CeleryTaskName.PROCESS_EMAIL.value,
         queue_name=RabbitMQ.EMAIL_QUEUE.value, 
         data={
-            "email_id": db_email.id,
+            "id": db_email.id,
             "from_": db_email.from_,
             "to_": db_email.to_,
             "subject": db_email.subject,

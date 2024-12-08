@@ -1,33 +1,61 @@
 import json
 import logging
 from celery_app import app
-import time
+from core.config import Config
+import requests
 
 logger = logging.getLogger(__name__)
+
+
+def send_email_via_brevo(from_, to_, subject, message):
+    url = "https://api.brevo.com/v3/smtp/email"
+
+    # Prepare the request payload
+    payload = {
+        "sender": {"email": from_},
+        "to": [{"email": to_}],
+        "subject": subject,
+        "htmlContent": message
+    }
+
+    # Set the headers
+    headers = {
+        "accept": "application/json",
+        "api-key": Config.BREVO_API_KEY,
+        "content-type": "application/json"
+    }
+
+    response = requests.post(url, json=payload, headers=headers)
+    response.raise_for_status()
+    
+    response_json = response.json()
+    
+    logger.info(f"Email sent successfully to {to_} with id {response_json.get('id', None)}")
+    return response_json
+
+
 
 
 @app.task(name='email.process_email', bind=True, max_retries=3)
 def process_email(self, body):
     try:
-        # Parse message if it's a string
+        # Parse payload if it's a string
         if isinstance(body, str):
-            message = json.loads(body)
+            payload = json.loads(body)
         else:
-            message = body
+            payload = body
             
         # Extract message data
-        email = message.get('email')
-        subject = message.get('subject')
-        text_message = message.get('message')
-        idempotency_key = message.get('idempotency_key')
+        id = payload.get('id')
+        from_ = payload.get('from_')
+        to_ = payload.get('to_')
+        subject = payload.get('subject')
+        message = payload.get('message')
+        logger.info(f"Processing email from {from_} to {to_}...")
         
-        logger.info(f"Processing email to {email}: {text_message[:20]}...")
+        send_email_via_brevo(from_, to_, subject, message)
         
-        # TODO: Implement actual email sending logic here
-        # For example, integrate with SMTP server or email service provider
-        time.sleep(20)
-        
-        logger.info(f"Successfully processed email to {email} (idempotency_key: {idempotency_key})")
+        logger.info(f"Successfully processed email ID: {id}")
         return True
         
     except Exception as exc:

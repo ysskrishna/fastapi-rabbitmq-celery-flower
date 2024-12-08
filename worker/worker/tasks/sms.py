@@ -29,24 +29,23 @@ def send_sms_via_twilio(from_number, to_number, message_body):
 @app.task(name='sms.process_sms', bind=True, max_retries=3)
 def process_sms(self, body):
     try:
-        # Parse message if it's a string
+        # Parse payload if it's a string
         if isinstance(body, str):
-            message = json.loads(body)
+            payload = json.loads(body)
         else:
-            message = body
+            payload = body
         
-        # Extract message data
-        sms_id = message.get('sms_id')
-        from_ = message.get('from_')
-        to_ = message.get('to_')
-        text_message = message.get('message')
-        idempotency_key = message.get('idempotency_key')
+        # Extract payload data
+        id = payload.get('id')
+        from_ = payload.get('from_')
+        to_ = payload.get('to_')
+        message = payload.get('message')
         
-        logger.info(f"Processing SMS {sms_id} from {from_} to {to_}: {text_message[:20]}...")
+        logger.info(f"Processing SMS {id} from {from_} to {to_}: {message[:20]}...")
         
-        send_sms_via_twilio(from_, to_, text_message)
+        send_sms_via_twilio(from_, to_, message)
         
-        logger.info(f"Successfully processed SMS {sms_id} (idempotency_key: {idempotency_key})")
+        logger.info(f"Successfully processed SMS ID: {id}")
         return True
         
     except Exception as exc:
