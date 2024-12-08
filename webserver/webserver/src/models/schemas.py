@@ -1,10 +1,10 @@
 from pydantic import BaseModel, EmailStr
 
 class CreateSMS(BaseModel):
-    phone: str
+    to_: str
     message: str
 
 class CreateEmail(BaseModel):
-    email: EmailStr
+    to_: EmailStr
     subject: str
     message: str

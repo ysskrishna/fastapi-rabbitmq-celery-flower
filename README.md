@@ -30,3 +30,9 @@ http://localhost:15672/
 ```
 http://localhost:5555/
 ```
+
+**update webserver/.env variables**
+```
+TWILIO_FROM_PHONE="your-twilio-phone-number"
+BREVO_FROM_EMAIL="your-brevo-from-email" 
+```

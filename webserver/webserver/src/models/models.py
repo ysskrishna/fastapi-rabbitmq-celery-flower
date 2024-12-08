@@ -15,13 +15,15 @@ class SMS(Timestamp, Base):
 
 
     id = Column(Integer, primary_key=True, index=True)
-    phone = Column(String, index=True)
+    from_ = Column(String, index=True)
+    to_ = Column(String, index=True)
     message = Column(Text)
 
 class Email(Timestamp, Base):
     __tablename__ = "email"
 
     id = Column(Integer, primary_key=True, index=True)
-    email = Column(String, index=True)
+    from_ = Column(String, index=True)
+    to_ = Column(String, index=True)
     subject = Column(String)
     message = Column(Text)
