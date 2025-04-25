@@ -3,10 +3,25 @@ name = "worker"
 version = "1.0.0"
 description = "Celery worker to process RabbitMQ messages"
 authors = [
-    {name = "Siva Sai",email = "sivasaikrishnassk@gmail.com"}
+    {name = "ysskrishna",email = "sivasaikrishnassk@gmail.com"}
 ]
+license = "AGPL-3.0-or-later"
 readme = "README.md"
 requires-python = ">=3.12"
+keywords = ["celery", "rabbitmq", "worker", "task-queue", "message-broker", "async-tasks", "background-jobs", "distributed-systems", "queue", "microservices"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+    "Operating System :: OS Independent",
+    "Framework :: Celery",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+    "Topic :: System :: Distributed Computing",
+    "Topic :: System :: Monitoring"
+]
+
 dependencies = [
     "python-dotenv (>=1.1.0,<2.0.0)",
     "celery (>=5.5.1,<6.0.0)",
@@ -15,6 +30,13 @@ dependencies = [
     "sqlalchemy (>=2.0.40,<3.0.0)",
     "requests (>=2.32.3,<3.0.0)"
 ]
+
+[project.urls]
+Homepage = "https://github.com/ysskrishna/fastapi-rabbitmq-celery-flower"
+Documentation = "https://github.com/ysskrishna/fastapi-rabbitmq-celery-flower#readme"
+Repository = "https://github.com/ysskrishna/fastapi-rabbitmq-celery-flower.git"
+"Bug Tracker" = "https://github.com/ysskrishna/fastapi-rabbitmq-celery-flower/issues"
+
 
 [tool.poetry]
 packages = [{include = "worker"}]

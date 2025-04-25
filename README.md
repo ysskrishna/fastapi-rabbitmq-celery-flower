@@ -82,3 +82,14 @@ docker compose down
 # Stop and delete volumes
 docker compose down -v
 ```
+
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+Copyright (c) 2025 Y. Siva Sai Krishna
+
+This project is licensed under the GNU Affero General Public License v3.0 (AGPL-3.0) License - see the [LICENSE](LICENSE) file for details.
