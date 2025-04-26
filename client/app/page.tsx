@@ -80,8 +80,6 @@ export default function Home() {
 
   return (
     <div className="container mx-auto py-8 px-4">
-      <h1 className="text-3xl font-bold mb-8">Template Management</h1>
-
       <div className="space-y-6">
         <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 

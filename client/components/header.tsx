@@ -4,30 +4,18 @@ import { ModeToggle } from "./mode-toggle"
 export default function Header() {
   return (
     <header className="border-b">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
+      <div className="mx-auto flex max-w-7xl items-center justify-between py-4 px-4 pb-4 sm:px-6 lg:px-8">
         <Link href="/" className="text-xl font-bold">
-          Template Manager
+          TemplateHub
         </Link>
         <div className="flex items-center gap-4">
-          <nav className="hidden md:flex">
-            <ul className="flex space-x-4">
-              <li>
-                <Link href="/" className="hover:text-primary">
-                  Templates
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-primary">
-                  Dashboard
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-primary">
-                  Settings
-                </Link>
-              </li>
-            </ul>
-          </nav>
+          <Link
+            href="/creator"
+            className="text font-medium hover:text-primary transition-colors"
+          >
+            Creator
+          </Link>
+
           <ModeToggle />
         </div>
       </div>
