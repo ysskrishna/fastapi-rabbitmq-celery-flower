@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2025-04-27
+
+### Added
+- **Client Application**
+  - Implemented Next.js client with shadcn/ui components
+  - Added template preview pages for SMS and email
+  - Created creator page
+  - Integrated client with webserver API
+  - Added pagination support for template listings
+  - SMS preview layout and template card styling for improved readability
+  - Pagination functionality in homepage
+  - HTML rendering in email previews with prettify function
+  - Logo and metadata configuration
+  
+### Changed
+- **Docker Configuration**
+  - Added Docker configuration for client application
+  - Updated docker-compose.yml to include client service
+  - Added proper container networking between client and webserver
+
+
 ## [1.0.0] - 2025-04-25
 
 ### Added
@@ -46,4 +67,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Service dependency management
 
 
+[1.1.0]: https://github.com/ysskrishna/fastapi-rabbitmq-celery-flower/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/ysskrishna/fastapi-rabbitmq-celery-flower/releases/tag/v1.0.0
