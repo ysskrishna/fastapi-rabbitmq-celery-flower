@@ -1,6 +1,5 @@
 const config = {
-    baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
-    apiUrl: process.env.NEXT_PUBLIC_API_URL,
+    baseUrl: process.env.NEXT_PUBLIC_BASE_URL || 'http://127.0.0.1:8000',
     productName: "TemplateHub",
     creator: {
       fullName: "Y. Siva Sai Krishna",
