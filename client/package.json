@@ -1,7 +1,33 @@
 {
-  "name": "my-v0-project",
-  "version": "0.1.0",
-  "private": true,
+  "name": "templatehub",
+  "version": "1.1.0",
+  "license": "AGPL-3.0",
+  "author": {
+    "name": "ysskrishna",
+    "url": "https://github.com/ysskrishna"
+  },
+  "keywords": [
+    "templatehub",
+    "template",
+    "email",
+    "sms",
+    "sms preview",
+    "email preview",
+    "responsive template",
+    "ysskrishna",
+    "notification",
+    "messaging",
+    "communication",
+    "fastapi",
+    "rabbitmq",
+    "celery",
+    "flower",
+    "nextjs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ysskrishna/fastapi-rabbitmq-celery-flower"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
