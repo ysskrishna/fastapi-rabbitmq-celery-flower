@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { ArrowLeft, Send } from "lucide-react"
 import { toast } from "@/hooks/use-toast"
+import config from "@/common/config"
 
 export default function SMSPreviewPage() {
   const params = useParams()
@@ -49,7 +50,7 @@ export default function SMSPreviewPage() {
     }
   }
 
-  const handleSendSMS = () => {
+  const handleSendSMS = async () => {
     if (!phoneNumber) {
       setPhoneError("Phone number is required")
       return
@@ -62,14 +63,40 @@ export default function SMSPreviewPage() {
 
     setIsLoading(true)
 
-    // Simulate sending SMS
-    setTimeout(() => {
-      setIsLoading(false)
+    try {
+      const response = await fetch(`${config.baseUrl}/notification/sms`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to_: phoneNumber,
+          message: message
+        }),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "SMS Sent",
+          description: `SMS sent to ${phoneNumber}`,
+        })
+      } else {
+        const errorData = await response.json();
+        toast({
+          title: "Failed to send SMS",
+          description: errorData.message || "An error occurred",
+          variant: "destructive",
+        })
+      }
+    } catch (error) {
       toast({
-        title: "SMS Sent",
-        description: `SMS sent to ${phoneNumber}`,
+        title: "Error",
+        description: "Failed to send SMS",
+        variant: "destructive",
       })
-    }, 1500)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   if (!template) {

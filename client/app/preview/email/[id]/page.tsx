@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ArrowLeft, Send, Smartphone, Tablet, Monitor, Code } from "lucide-react"
 import { toast } from "@/hooks/use-toast"
+import config from "@/common/config"
 
 export default function EmailPreviewPage() {
   const params = useParams()
@@ -52,7 +53,7 @@ export default function EmailPreviewPage() {
     }
   }
 
-  const handleSendEmail = () => {
+  const handleSendEmail = async () => {
     if (!email) {
       setEmailError("Email address is required")
       return
@@ -65,14 +66,41 @@ export default function EmailPreviewPage() {
 
     setIsLoading(true)
 
-    // Simulate sending email
-    setTimeout(() => {
-      setIsLoading(false)
+    try {
+      const response = await fetch(`${config.baseUrl}/notification/email`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to_: email,
+          subject: subject,
+          message: content
+        }),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Email Sent",
+          description: `Email sent to ${email}`,
+        })
+      } else {
+        const errorData = await response.json();
+        toast({
+          title: "Failed to send email",
+          description: errorData.message || "An error occurred",
+          variant: "destructive",
+        })
+      }
+    } catch (error) {
       toast({
-        title: "Email Sent",
-        description: `Email sent to ${email}`,
+        title: "Error",
+        description: "Failed to send email",
+        variant: "destructive",
       })
-    }, 1500)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const prettifyHTML = () => {
