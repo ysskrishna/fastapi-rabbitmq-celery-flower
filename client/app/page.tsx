@@ -14,6 +14,7 @@ export default function Home() {
   const [itemsPerPage, setItemsPerPage] = useState(10)
   const [isLoading, setIsLoading] = useState(false)
   const [filteredTemplates, setFilteredTemplates] = useState([] as any[])
+  const [activeTab, setActiveTab] = useState("all")
 
   const templates = getAllTemplates()
 
@@ -45,14 +46,31 @@ export default function Home() {
     return () => clearTimeout(timer)
   }, [templates, searchQuery])
 
-  // Pagination
-  const totalPages = Math.max(1, Math.ceil(filteredTemplates.length / itemsPerPage))
-  const paginatedTemplates = filteredTemplates.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+  // Reset current page when tab changes
+  const handleTabChange = (value: string) => {
+    setActiveTab(value)
+    setCurrentPage(1)
+  }
 
   // Filter templates by type for tabs
   const allTemplates = filteredTemplates
   const smsTemplates = filteredTemplates.filter(template => template.type === "sms")
   const emailTemplates = filteredTemplates.filter(template => template.type === "email")
+
+  // Get current templates based on active tab
+  const getCurrentTemplates = () => {
+    switch (activeTab) {
+      case "sms": return smsTemplates
+      case "email": return emailTemplates
+      default: return allTemplates
+    }
+  }
+
+  const currentTemplates = getCurrentTemplates()
+  
+  // Pagination
+  const totalPages = Math.max(1, Math.ceil(currentTemplates.length / itemsPerPage))
+  const paginatedTemplates = currentTemplates.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
 
   return (
     <div className="space-y-6">
@@ -60,7 +78,7 @@ export default function Home() {
         <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       </div>
 
-      <Tabs defaultValue="all">
+      <Tabs defaultValue="all" onValueChange={handleTabChange}>
         <TabsList>
           <TabsTrigger value="all">All Templates</TabsTrigger>
           <TabsTrigger value="sms">SMS</TabsTrigger>
@@ -92,7 +110,7 @@ export default function Home() {
             </div>
           ) : smsTemplates.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {smsTemplates.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((template) => (
+              {paginatedTemplates.map((template) => (
                 <TemplateCard key={template.id} template={template} />
               ))}
             </div>
@@ -110,7 +128,7 @@ export default function Home() {
             </div>
           ) : emailTemplates.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {emailTemplates.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((template) => (
+              {paginatedTemplates.map((template) => (
                 <TemplateCard key={template.id} template={template} />
               ))}
             </div>
@@ -122,7 +140,7 @@ export default function Home() {
         </TabsContent>
       </Tabs>
 
-      {filteredTemplates.length > 0 && (
+      {currentTemplates.length > 0 && (
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
