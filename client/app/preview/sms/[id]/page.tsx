@@ -81,7 +81,7 @@ export default function SMSPreviewPage() {
   }
 
   return (
-    <div className="container mx-auto py-8 px-4">
+    <div>
       <Button variant="ghost" className="mb-6" onClick={() => router.back()}>
         <ArrowLeft className="mr-2 h-4 w-4" />
         Back to Templates
@@ -128,9 +128,9 @@ export default function SMSPreviewPage() {
               <div className="absolute top-0 left-0 right-0 h-[60px] bg-gray-200 dark:bg-gray-700 rounded-t-[32px] flex items-center justify-center">
                 <div className="w-[150px] h-[30px] bg-gray-300 dark:bg-gray-600 rounded-full"></div>
               </div>
-              <div className="mt-[70px] h-[480px] bg-gray-100 dark:bg-gray-800 rounded-lg p-4 overflow-y-auto">
-                <div className="bg-primary text-primary-foreground p-3 rounded-lg rounded-tl-none max-w-[80%] ml-auto mb-4">
-                  {message}
+              <div className="mt-[70px] h-[430px] px-2 py-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600">
+                <div className="bg-gray-100 dark:bg-gray-800 p-3 rounded-lg rounded-tl-none inline-block max-w-[80%] ml-auto mb-4">
+                  <div className="break-words whitespace-pre-wrap">{message}</div>
                 </div>
               </div>
               <div className="absolute bottom-0 left-0 right-0 h-[40px] bg-gray-200 dark:bg-gray-700 rounded-b-[32px] flex items-center justify-center">
