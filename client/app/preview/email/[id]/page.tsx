@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { ArrowLeft, Send, Smartphone, Tablet, Monitor } from "lucide-react"
+import { ArrowLeft, Send, Smartphone, Tablet, Monitor, Code } from "lucide-react"
 import { toast } from "@/hooks/use-toast"
 
 export default function EmailPreviewPage() {
@@ -75,6 +75,58 @@ export default function EmailPreviewPage() {
     }, 1500)
   }
 
+  const prettifyHTML = () => {
+    try {
+      // First normalize the HTML by removing existing whitespace between tags
+      const normalizedHTML = content.replace(/>\s+</g, '><');
+      
+      // Create a temporary DOM parser
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(normalizedHTML, 'text/html');
+      
+      // Get formatted HTML with indentation (basic formatting)
+      const formattedHTML = formatHTML(doc.documentElement.outerHTML);
+      
+      setContent(formattedHTML);
+      toast({
+        title: "HTML Prettified",
+        description: "The HTML content has been formatted",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Could not prettify HTML. Check for syntax errors.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  // Function to format HTML with proper indentation
+  const formatHTML = (html: string) => {
+    // First normalize HTML by removing whitespace between tags
+    const normalizedHTML = html.replace(/>\s+</g, '><');
+    
+    let formatted = '';
+    let indent = '';
+    
+    // Split the HTML into lines by tags
+    normalizedHTML.replace(/(>)(<)(\/*)/g, '$1\n$2$3').split('\n').forEach(line => {
+      if (line.match(/^<\/\w/)) { // If this is a closing tag
+        indent = indent.substring(2);
+      }
+      
+      formatted += indent + line + '\n';
+      
+      if (line.match(/^<\w[^>]*[^\/]>.*$/) && 
+          !line.match(/<(area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr).*?>/i)) {
+        // If this is an opening tag (not self-closing) and not a void element
+        indent += '  ';
+      }
+    });
+    
+    return formatted.trim();
+  };
+
   if (!template) {
     return (
       <div className="container mx-auto py-8 px-4 flex justify-center items-center">
@@ -84,7 +136,7 @@ export default function EmailPreviewPage() {
   }
 
   return (
-    <div className="container mx-auto py-8 px-4">
+    <div className="">
       <Button variant="ghost" className="mb-6" onClick={() => router.back()}>
         <ArrowLeft className="mr-2 h-4 w-4" />
         Back to Templates
@@ -114,7 +166,18 @@ export default function EmailPreviewPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="content">HTML Content</Label>
+              <div className="flex justify-between items-center">
+                <Label htmlFor="content">HTML Content</Label>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={prettifyHTML}
+                  className="flex gap-1 items-center"
+                >
+                  <Code className="h-4 w-4" />
+                  Prettify HTML
+                </Button>
+              </div>
               <Textarea
                 id="content"
                 rows={10}
