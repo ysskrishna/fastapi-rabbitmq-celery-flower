@@ -1,5 +1,7 @@
 # FastAPI RabbitMQ Celery Flower Application
 
+[![License: AGPL-3.0](https://img.shields.io/github/license/ysskrishna/fastapi-rabbitmq-celery-flower)](https://github.com/ysskrishna/fastapi-rabbitmq-celery-flower/blob/main/LICENSE.md) [![GitHub release](https://img.shields.io/github/v/release/ysskrishna/fastapi-rabbitmq-celery-flower?label=release)](https://github.com/ysskrishna/fastapi-rabbitmq-celery-flower/releases) [![Author site](https://img.shields.io/badge/author-ysskrishna.space-informational)](https://ysskrishna.space)
+
 A distributed application for sending SMS and emails using FastAPI, RabbitMQ, Celery, Flower and PostgreSQL.
 
 ### Features
@@ -88,8 +90,36 @@ docker compose down -v
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
+## Built and maintained by
+
+FastAPI RabbitMQ Celery Flower Application is built and maintained by:
+
+| | Name | GitHub | Role |
+|---|------|--------|------|
+| <img src="https://github.com/ysskrishna.png?size=120" width="60" height="60" alt="Y. Siva Sai Krishna"> | **Y. Siva Sai Krishna** | [@ysskrishna](https://github.com/ysskrishna) | Creator |
+
+## Changelog
+
+See [CHANGELOG](CHANGELOG.md) for release history.
+
+## Support
+
+If you find this project helpful:
+
+- ⭐ Star the repository
+- 🐛 [Report issues](https://github.com/ysskrishna/fastapi-rabbitmq-celery-flower/issues)
+- 🔀 Submit pull requests
+- 💝 [Sponsor on GitHub](https://github.com/sponsors/ysskrishna)
+
 ## License
 
-Copyright (c) 2025 Y. Siva Sai Krishna
+AGPL-3.0 © [Y. Siva Sai Krishna](https://github.com/ysskrishna) — see [LICENSE.md](LICENSE.md) for details.
 
-This project is licensed under the GNU Affero General Public License v3.0 (AGPL-3.0) License - see the [LICENSE](LICENSE) file for details.
+---
+
+<p align="left">
+  <a href="https://github.com/ysskrishna">Author's GitHub</a> •
+  <a href="https://linkedin.com/in/ysskrishna">Author's LinkedIn</a> •
+  <a href="https://ysskrishna.space">Author's site</a> •
+  <a href="https://github.com/ysskrishna/fastapi-rabbitmq-celery-flower/issues">Report Issues</a>
+</p>
