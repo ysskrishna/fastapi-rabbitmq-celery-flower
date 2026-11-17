@@ -1,1 +1,5 @@
 workspace/
+
+# Local secret files. Example files stay tracked.
+webserver/webserver/.env
+worker/worker/.env
